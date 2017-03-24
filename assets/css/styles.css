@@ -1,0 +1,20 @@
+.clearfix{
+    float: nonne;
+    clear: both;
+    text-decoration: none;
+    list-style: none;
+}
+
+body{
+    font-family: Helvetica, Arial;
+}
+
+#content{
+    width: 80%;
+    min-height: 500px;
+    margin: 0 auto;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px #ddd;
+}
