@@ -6,5 +6,11 @@ import {Restaurante} from "../model/restaurante";
 
 @Injectable()
 export class RestauranteService{
-    
+    constructor(private _http: Http){
+
+    }
+
+    getRestaurantes(){
+        
+    }
 }
