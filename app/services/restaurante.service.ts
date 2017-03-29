@@ -11,6 +11,6 @@ export class RestauranteService{
     }
 
     getRestaurantes(){
-        
+        return this._http.get("http://localhost:8888/api-rest/restaurantes-api.php/restaurantes").map(res => res.json());
     }
 }
