@@ -1,7 +1,7 @@
-{{tituloComponente}}
+<h1>{{tituloComponente}}</h1>
 
-<ul id="">
-    <li *ngFor="restaurante of restaurantes">
+<ul id="restaurantes-list">
+    <li *ngFor="#restaurante of restaurantes" class="restaurantes-item">
         <div class="image"></div>
         <div class="data">
             <h4>{{restaurante.nombre}}</h4>
@@ -12,6 +12,7 @@
                 <a href="" class="btn btn-eliminar">Eliminar</a>
             </p>
         </div>
-
+        <div class="clearfix"></div>
     </li>
+    <div class="clearfix"></div>
 </ul>
