@@ -17,17 +17,22 @@ export class RestaurantesListComponent {
    public restaurantes: Restaurante[];
    public status:string;
    public errorMessage:string;
+   public loading:string;
 
    constructor(private _restauranteService: RestauranteService){
 
    }
 
    ngOnInit(){
+       this.loading = 'show';
        this.getRestaurantes();
        console.log("restaurantes-list component cargado");
    }
 
    getRestaurantes(){
+       /* Prueba de visibilidad de la imagen de carga con manipulación del DOM con Javascript
+       let box_restaurantes = <HTMLElement>document.querySelector("#restaurantes-list .loading");
+       box_restaurantes.style.visibility = "visible";*/
        this._restauranteService.getRestaurantes().subscribe(
            result => {
                this.restaurantes = result.data;
@@ -35,6 +40,8 @@ export class RestaurantesListComponent {
                if(this.status!=="success"){
                     alert("Error en el servidor");
                }
+               this.loading = 'hide';
+               /*box_restaurantes.style.display = "none";*/
            }, error => {
                 this.errorMessage = <any>error;
 

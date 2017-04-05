@@ -110,3 +110,17 @@ header h1{
     border-color: #F54747;
 
 }
+
+.loading {
+    list-style: none;
+    text-decoration: none;
+}
+
+.loading {
+    list-style: none;
+    text-decoration: none;
+}
+
+.loading img{
+    height: 80px;
+}
