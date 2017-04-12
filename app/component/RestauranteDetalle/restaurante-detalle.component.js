@@ -11,7 +11,7 @@ System.register(['angular2/core', 'angular2/router', "../../services/restaurante
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, router_1, restaurante_service_1;
-    var RestaurantesListComponent;
+    var RestauranteDetalleComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -25,24 +25,22 @@ System.register(['angular2/core', 'angular2/router', "../../services/restaurante
             }],
         execute: function() {
             // Decorador component, indicamos en que etiqueta se va a cargar la plantilla
-            RestaurantesListComponent = (function () {
-                function RestaurantesListComponent(_restauranteService) {
+            RestauranteDetalleComponent = (function () {
+                function RestauranteDetalleComponent(_restauranteService, _routerParams) {
                     this._restauranteService = _restauranteService;
-                    this.tituloComponente = "Listado de restaurantes";
+                    this._routerParams = _routerParams;
                 }
-                RestaurantesListComponent.prototype.ngOnInit = function () {
-                    this.loading = 'show';
-                    this.getRestaurantes();
-                    console.log("restaurantes-list component cargado");
+                RestauranteDetalleComponent.prototype.ngOnInit = function () {
+                    this.parametro = this._routerParams.get("id") != null ? parseInt(this._routerParams.get("id")) : null;
+                    console.log("restaurantes-detalle component cargado");
                 };
-                RestaurantesListComponent.prototype.getRestaurantes = function () {
+                RestauranteDetalleComponent.prototype.getRestaurante = function () {
                     var _this = this;
-                    /* Prueba de visibilidad de la imagen de carga con manipulación del DOM con Javascript
-                    let box_restaurantes = <HTMLElement>document.querySelector("#restaurantes-list .loading");
-                    box_restaurantes.style.visibility = "visible";*/
-                    this._restauranteService.getRestaurantes().subscribe(function (result) {
-                        _this.restaurantes = result.data;
-                        _this.status = result.status;
+                    var id = this._routerParams.get("");
+                    this._restauranteService.getRestaurante(id)
+                        .subscribe(function (Response) {
+                        _this.restaurante = Response.data;
+                        _this.status = Response.status;
                         if (_this.status !== "success") {
                             alert("Error en el servidor");
                         }
@@ -56,19 +54,18 @@ System.register(['angular2/core', 'angular2/router', "../../services/restaurante
                         }
                     });
                 };
-                RestaurantesListComponent = __decorate([
+                RestauranteDetalleComponent = __decorate([
                     core_1.Component({
-                        selector: 'restaurantes-list',
-                        templateUrl: "app/view/restaurantes-list.html",
-                        providers: [restaurante_service_1.RestauranteService],
-                        directives: [router_1.ROUTER_DIRECTIVES]
+                        selector: 'restaurante-detalle',
+                        templateUrl: "app/view/restaurante-detalle.html",
+                        providers: [restaurante_service_1.RestauranteService]
                     }), 
-                    __metadata('design:paramtypes', [restaurante_service_1.RestauranteService])
-                ], RestaurantesListComponent);
-                return RestaurantesListComponent;
+                    __metadata('design:paramtypes', [restaurante_service_1.RestauranteService, router_1.RouteParams])
+                ], RestauranteDetalleComponent);
+                return RestauranteDetalleComponent;
             }());
-            exports_1("RestaurantesListComponent", RestaurantesListComponent);
+            exports_1("RestauranteDetalleComponent", RestauranteDetalleComponent);
         }
     }
 });
-//# sourceMappingURL=restaurantes-list.component.js.map
+//# sourceMappingURL=restaurante-detalle.component.js.map
