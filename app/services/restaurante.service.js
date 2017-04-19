@@ -30,7 +30,7 @@ System.register(["angular2/core", "angular2/http", "rxjs/add/operator/map"], fun
                     return this._http.get("http://localhost:8888/api-rest/restaurantes-api.php/restaurantes").map(function (res) { return res.json(); });
                 };
                 RestauranteService.prototype.getRestaurante = function (id) {
-                    return this._http.get("http://localhost:8888/api-rest/restaurantes-api.php/restaurantes" + id).map(function (res) { return res.json(); });
+                    return this._http.get("http://localhost:8888/api-rest/restaurantes-api.php/restaurante/" + id).map(function (res) { return res.json(); });
                 };
                 RestauranteService = __decorate([
                     core_1.Injectable(), 

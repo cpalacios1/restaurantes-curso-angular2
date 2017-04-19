@@ -31,20 +31,19 @@ System.register(['angular2/core', 'angular2/router', "../../services/restaurante
                     this._routerParams = _routerParams;
                 }
                 RestauranteDetalleComponent.prototype.ngOnInit = function () {
-                    this.parametro = this._routerParams.get("id") != null ? parseInt(this._routerParams.get("id")) : null;
-                    console.log("restaurantes-detalle component cargado");
+                    this.getRestaurante();
                 };
                 RestauranteDetalleComponent.prototype.getRestaurante = function () {
                     var _this = this;
-                    var id = this._routerParams.get("");
+                    var id = this._routerParams.get("id");
                     this._restauranteService.getRestaurante(id)
                         .subscribe(function (Response) {
                         _this.restaurante = Response.data;
                         _this.status = Response.status;
                         if (_this.status !== "success") {
-                            alert("Error en el servidor");
                         }
                         _this.loading = 'hide';
+                        console.log(_this.restaurante);
                         /*box_restaurantes.style.display = "none";*/
                     }, function (error) {
                         _this.errorMessage = error;

@@ -13,7 +13,6 @@ import {Restaurante} from "../../model/restaurante";
  
 // Clase del componente donde iran los datos y funcionalidades
 export class RestauranteDetalleComponent {
-    public parametro:number ;
     public restaurante:Restaurante ;
     public status:string;
     public errorMessage:string;
@@ -25,21 +24,22 @@ export class RestauranteDetalleComponent {
     }
 
     ngOnInit(){
-        this.parametro = this._routerParams.get("id")!=null?parseInt(this._routerParams.get("id")):null;
-        console.log("restaurantes-detalle component cargado");
+        
+       this.getRestaurante();
     }
 
     getRestaurante(){
-        let id = this._routerParams.get("");
+        let id = this._routerParams.get("id");
         this._restauranteService.getRestaurante(id)
         .subscribe(
             Response =>{
                this.restaurante = Response.data;
                this.status = Response.status;
                if(this.status!=="success"){
-                    alert("Error en el servidor");
+                    //alert("Error en el servidor");
                }
                this.loading = 'hide';
+               console.log(this.restaurante);
                /*box_restaurantes.style.display = "none";*/
            }, error => {
                 this.errorMessage = <any>error;
