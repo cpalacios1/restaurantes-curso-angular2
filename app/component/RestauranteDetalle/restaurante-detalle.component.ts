@@ -1,6 +1,6 @@
 // Importar el núcleo de Angular
 import {Component} from 'angular2/core';
-import {RouteParams} from 'angular2/router';
+import {Router, RouteParams} from 'angular2/router';
 import {RestauranteService} from "../../services/restaurante.service";
 import {Restaurante} from "../../model/restaurante";
  
@@ -19,7 +19,7 @@ export class RestauranteDetalleComponent {
     public loading:string;
 
 
-    constructor(private _restauranteService:RestauranteService, private _routerParams:RouteParams ){
+    constructor(private _restauranteService:RestauranteService, private _routerParams:RouteParams, private _router:Router){
 
     }
 
@@ -37,6 +37,7 @@ export class RestauranteDetalleComponent {
                this.status = Response.status;
                if(this.status!=="success"){
                     //alert("Error en el servidor");
+                    this._router.navigate(['Home']);
                }
                this.loading = 'hide';
                console.log(this.restaurante);
