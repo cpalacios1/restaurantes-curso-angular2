@@ -24,7 +24,6 @@ export class RestauranteDetalleComponent {
     }
 
     ngOnInit(){
-        
        this.getRestaurante();
     }
 
