@@ -1,5 +1,5 @@
 // Importar el núcleo de Angular
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {Router, RouteParams} from 'angular2/router';
 import {RestauranteService} from "../../services/restaurante.service";
 import {Restaurante} from "../../model/restaurante";
@@ -12,7 +12,7 @@ import {Restaurante} from "../../model/restaurante";
 })
  
 // Clase del componente donde iran los datos y funcionalidades
-export class RestauranteAgregarComponent {
+export class RestauranteAgregarComponent implements OnInit {
     public restaurante:Restaurante ;
     public status:string;
     public errorMessage:string;
@@ -23,7 +23,7 @@ export class RestauranteAgregarComponent {
 
     }
 
-    ngOnInit(){
+    ngOnInit():any{
         this.restaurante = new Restaurante(0, this._routerParams.get("nombre"), this._routerParams.get("direccion"), 
         this._routerParams.get("descripcion"), "null", "bajo");
         console.log("ComponenteAgregar cargado");

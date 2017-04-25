@@ -1,24 +1,27 @@
 <h1>Añadir nuevo restaurante</h1>
-<form #formRestaurante="ngForm" (ngSubmit)="onSubmit()">
+<form #formularioRestaurante="ngForm" (ngSubmit)="onSubmit()">
     <label>Nombre</label>
     <p>
-        <input type="text" #nombre="ngForm"  [(ngModel)]="restaurante.nombre"/>
+        <input type="text" #nombre="ngForm"  [(ngModel)]="restaurante.nombre" required minlength="5"/>
+        <span *ngIf="!nombre.valid">No válido</span>
     </p>
     <label>Dirección</label>
     <p>
-        <input type="text" #direccion="ngForm"  [(ngModel)]="restaurante.direccion"/>
+        <input type="text" #direccion="ngForm"  [(ngModel)]="restaurante.direccion" required/>
+        <span *ngIf="!direccion.valid">No válido</span>
     </p>
     <label>Descripción</label>
     <p>
-        <textarea #descripcion="ngForm"  [(ngModel)]="restaurante.descripcion"></textarea>
+        <textarea #descripcion="ngForm"  [(ngModel)]="restaurante.descripcion" required></textarea>
+        <span *ngIf="!descripcion.valid">No válido</span>
     </p>
     <label>Precio</label>
     <p>
-        <select #nombre="ngForm"  [(ngModel)]="restaurante.precio">
+        <select #precio="ngForm"  [(ngModel)]="restaurante.precio" >
             <option value="bajo">Bajo</option>
             <option value="normal">Normal</option>
             <option value="alto">Alto</option>
         </select>
     </p>
-    <input type="submit" value="Crear restaurante"/>
+   <input type="submit" value="Crear restaurante" [disabled]="!formularioRestaurante.form.valid" />
 </form>
