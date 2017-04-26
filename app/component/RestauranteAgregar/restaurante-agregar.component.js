@@ -38,6 +38,23 @@ System.register(['angular2/core', 'angular2/router', "../../services/restaurante
                     this.restaurante = new restaurante_1.Restaurante(0, this._routerParams.get("nombre"), this._routerParams.get("direccion"), this._routerParams.get("descripcion"), "null", "bajo");
                     console.log("ComponenteAgregar cargado");
                 };
+                RestauranteAgregarComponent.prototype.onSubmit = function () {
+                    var _this = this;
+                    this._restauranteService.addRestaurante(this.restaurante)
+                        .subscribe(function (response) {
+                        _this.status = response.status;
+                        if (_this.status !== "success") {
+                            alert("Error en el servidor");
+                        }
+                    }, function (error) {
+                        _this.errorMessage = error;
+                        if (_this.errorMessage !== null) {
+                            console.log(_this.errorMessage);
+                            alert("Error en la petición");
+                        }
+                    });
+                    this._router.navigate(["HOME"]);
+                };
                 RestauranteAgregarComponent = __decorate([
                     core_1.Component({
                         selector: 'restaurante-agregar',

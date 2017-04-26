@@ -28,4 +28,24 @@ export class RestauranteAgregarComponent implements OnInit {
         this._routerParams.get("descripcion"), "null", "bajo");
         console.log("ComponenteAgregar cargado");
     }
+
+    onSubmit(){
+        this._restauranteService.addRestaurante(this.restaurante)
+        .subscribe(
+            response =>{
+                this.status = response.status;
+                if(this.status!=="success"){
+                    alert("Error en el servidor");
+                }
+            }, error => {
+                this.errorMessage = <any>error;
+
+                if(this.errorMessage!==null){
+                    console.log(this.errorMessage);
+                    alert("Error en la petición");
+                }
+            }
+        );
+        this._router.navigate(["HOME"]);
+    }
 }
