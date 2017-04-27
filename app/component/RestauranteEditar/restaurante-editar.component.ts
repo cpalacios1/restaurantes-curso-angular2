@@ -6,14 +6,14 @@ import {Restaurante} from "../../model/restaurante";
  
 // Decorador component, indicamos en que etiqueta se va a cargar la plantilla
 @Component({
-    selector: 'restaurante-agregar',
+    selector: 'restaurante-editar',
     templateUrl: "app/view/restaurante-agregar.html",
     providers: [RestauranteService]
 })
  
 // Clase del componente donde iran los datos y funcionalidades
-export class RestauranteAgregarComponent implements OnInit {
-    public tituloComponente:string = "Crear restaurante";
+export class RestauranteEditarComponent implements OnInit {
+    public tituloComponente:string = "Editar restaurante";
     public restaurante:Restaurante ;
     public status:string;
     public errorMessage:string;
@@ -25,13 +25,42 @@ export class RestauranteAgregarComponent implements OnInit {
     }
 
     ngOnInit():any{
-        this.restaurante = new Restaurante(0, this._routerParams.get("nombre"), this._routerParams.get("direccion"), 
-        this._routerParams.get("descripcion"), "null", "bajo");
+         this.restaurante = new Restaurante(0, "null", "null", "null", "null", "bajo");
+        if(this._routerParams.get("id")!==null){
+            console.log("Carga restaurante");
+            this.getRestaurante();
+        }
+        
         console.log("ComponenteAgregar cargado");
     }
 
+    getRestaurante(){
+        let id = this._routerParams.get("id");
+        this._restauranteService.getRestaurante(id)
+        .subscribe(
+            Response =>{
+               this.restaurante = Response.data;
+               this.status = Response.status;
+               if(this.status!=="success"){
+                    //alert("Error en el servidor");
+                    this._router.navigate(['Home']);
+               }
+               this.loading = 'hide';
+               console.log(this.restaurante);
+               /*box_restaurantes.style.display = "none";*/
+           }, error => {
+                this.errorMessage = <any>error;
+
+                if(this.errorMessage!==null){
+                    console.log(this.errorMessage);
+                    alert("Error en la petición");
+                }
+           }
+       );
+    }
+
     onSubmit(){
-        console.log(this.restaurante);
+        /*console.log(this.restaurante);
         this._restauranteService.addRestaurante(this.restaurante)
         .subscribe(
             response =>{
@@ -50,7 +79,7 @@ export class RestauranteAgregarComponent implements OnInit {
                     alert("Error en la petición");
                 }
             }
-        );
+        );*/
         
     }
 

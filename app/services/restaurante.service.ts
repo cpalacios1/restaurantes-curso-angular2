@@ -21,7 +21,7 @@ export class RestauranteService{
     addRestaurante(restaurante:Restaurante){
         let json = JSON.stringify(restaurante);
         let params = "json="+json;
-        let headers = new Headers({"Content-Type":"aplication/x-www-form-urlencoded"});
+        let headers = new Headers({"Content-Type":"application/x-www-form-urlencoded"});
         
         return this._http.post("http://localhost:8888/api-rest/restaurantes-api.php/restaurantes", params, {headers: headers})
         .map(res => res.json());

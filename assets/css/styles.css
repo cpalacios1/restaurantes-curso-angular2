@@ -44,7 +44,7 @@ header h1{
     float: left;
 }
 
-.main h1{
+.main{
     padding: 15px;
 }
 
@@ -172,3 +172,4 @@ nav ul li a:hover{
    color: white;
    opacity: 0.8;
 }
+

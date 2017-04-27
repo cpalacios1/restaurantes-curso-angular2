@@ -11,7 +11,7 @@ System.register(['angular2/core', 'angular2/router', "../../services/restaurante
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, router_1, restaurante_service_1, restaurante_1;
-    var RestauranteAgregarComponent;
+    var RestauranteEditarComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -28,30 +28,35 @@ System.register(['angular2/core', 'angular2/router', "../../services/restaurante
             }],
         execute: function() {
             // Decorador component, indicamos en que etiqueta se va a cargar la plantilla
-            RestauranteAgregarComponent = (function () {
-                function RestauranteAgregarComponent(_restauranteService, _routerParams, _router) {
+            RestauranteEditarComponent = (function () {
+                function RestauranteEditarComponent(_restauranteService, _routerParams, _router) {
                     this._restauranteService = _restauranteService;
                     this._routerParams = _routerParams;
                     this._router = _router;
-                    this.tituloComponente = "Crear restaurante";
+                    this.tituloComponente = "Editar restaurante";
                 }
-                RestauranteAgregarComponent.prototype.ngOnInit = function () {
-                    this.restaurante = new restaurante_1.Restaurante(0, this._routerParams.get("nombre"), this._routerParams.get("direccion"), this._routerParams.get("descripcion"), "null", "bajo");
+                RestauranteEditarComponent.prototype.ngOnInit = function () {
+                    this.restaurante = new restaurante_1.Restaurante(0, "null", "null", "null", "null", "bajo");
+                    if (this._routerParams.get("id") !== null) {
+                        console.log("Carga restaurante");
+                        this.getRestaurante();
+                    }
                     console.log("ComponenteAgregar cargado");
                 };
-                RestauranteAgregarComponent.prototype.onSubmit = function () {
+                RestauranteEditarComponent.prototype.getRestaurante = function () {
                     var _this = this;
-                    console.log(this.restaurante);
-                    this._restauranteService.addRestaurante(this.restaurante)
-                        .subscribe(function (response) {
-                        _this.status = response.status;
+                    var id = this._routerParams.get("id");
+                    this._restauranteService.getRestaurante(id)
+                        .subscribe(function (Response) {
+                        _this.restaurante = Response.data;
+                        _this.status = Response.status;
                         if (_this.status !== "success") {
-                            alert("Error en el servidor");
+                            //alert("Error en el servidor");
+                            _this._router.navigate(['Home']);
                         }
-                        else {
-                            console.log("Restaurante credo con éxito");
-                            _this._router.navigate(["Home"]);
-                        }
+                        _this.loading = 'hide';
+                        console.log(_this.restaurante);
+                        /*box_restaurantes.style.display = "none";*/
                     }, function (error) {
                         _this.errorMessage = error;
                         if (_this.errorMessage !== null) {
@@ -60,21 +65,43 @@ System.register(['angular2/core', 'angular2/router', "../../services/restaurante
                         }
                     });
                 };
-                RestauranteAgregarComponent.prototype.callPrecio = function (value) {
+                RestauranteEditarComponent.prototype.onSubmit = function () {
+                    /*console.log(this.restaurante);
+                    this._restauranteService.addRestaurante(this.restaurante)
+                    .subscribe(
+                        response =>{
+                            this.status = response.status;
+                            if(this.status!=="success"){
+                                alert("Error en el servidor");
+                            } else {
+                                console.log("Restaurante credo con éxito");
+                                this._router.navigate(["Home"]);
+                            }
+                        }, error => {
+                            this.errorMessage = <any>error;
+            
+                            if(this.errorMessage!==null){
+                                console.log(this.errorMessage);
+                                alert("Error en la petición");
+                            }
+                        }
+                    );*/
+                };
+                RestauranteEditarComponent.prototype.callPrecio = function (value) {
                     this.restaurante.precio = value;
                 };
-                RestauranteAgregarComponent = __decorate([
+                RestauranteEditarComponent = __decorate([
                     core_1.Component({
-                        selector: 'restaurante-agregar',
+                        selector: 'restaurante-editar',
                         templateUrl: "app/view/restaurante-agregar.html",
                         providers: [restaurante_service_1.RestauranteService]
                     }), 
                     __metadata('design:paramtypes', [restaurante_service_1.RestauranteService, router_1.RouteParams, router_1.Router])
-                ], RestauranteAgregarComponent);
-                return RestauranteAgregarComponent;
+                ], RestauranteEditarComponent);
+                return RestauranteEditarComponent;
             }());
-            exports_1("RestauranteAgregarComponent", RestauranteAgregarComponent);
+            exports_1("RestauranteEditarComponent", RestauranteEditarComponent);
         }
     }
 });
-//# sourceMappingURL=restaurante-agregar.component.js.map
+//# sourceMappingURL=restaurante-editar.component.js.map

@@ -1,5 +1,5 @@
-<h1>Añadir nuevo restaurante</h1>
-<form #miFormulario="ngForm" (ngSubmit)="onSubmit()">
+<h1>{{tituloComponente}}</h1>
+<form id="miFormulario" #miFormulario="ngForm" (ngSubmit)="onSubmit()">
     <label>Nombre</label>
     <p>
         <input type="text" #nombre="ngForm" ngControl="nombre" [(ngModel)]="restaurante.nombre" required minlength="5"/>
@@ -17,11 +17,11 @@
     </p>
     <label>Precio</label>
     <p>
-        <select #precio="ngForm"  [(ngModel)]="restaurante.precio" >
+        <select (change)="callPrecio(precio.value)" #precio="ngForm"  [(ngModel)]="restaurante.precio" >
             <option value="bajo">Bajo</option>
             <option value="normal">Normal</option>
             <option value="alto">Alto</option>
         </select>
     </p>
-   <input type="submit" value="Crear película" [disabled]="!miFormulario.form.valid" />
+   <input type="submit" value="Guardar" [disabled]="!miFormulario.form.valid" />
 </form>
