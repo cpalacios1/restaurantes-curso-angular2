@@ -11,9 +11,16 @@
             <p>{{restaurante.direccion}}</p>
             <p>
                 <a [routerLink]="['Restaurante', {id:restaurante.id}]" class="btn btn-ver">Ver</a>
-                <a [routerLink]="['EditarRestaurante', {id:restaurante.id}]" class="btn btn-editar">Editar</a>
-                <a href="" class="btn btn-eliminar">Eliminar</a>
+                <a [routerLink]="['EditarRestaurante', {id:restaurante.id}]" class="btn btn-verde">Editar</a>
+                <a (click)="onMostrarModalEliminar(restaurante.id)" class="btn btn-rojo">Eliminar</a>
             </p>
+        </div>
+        <div class="modal" *ngIf="mostrarModalEliminar && idRestauranteEliminar === restaurante.id">
+            <p>
+                ¿Estás seguro de eliminar el restaurante?
+            </p>
+            <a (click)="onEliminarRestaurante()" class="btn">Aceptar</a>
+            <a (click)="onCancelarEliminar()" class="btn btn-rojo">Cancelar</a>
         </div>
         <div class="clearfix"></div>
     </li>

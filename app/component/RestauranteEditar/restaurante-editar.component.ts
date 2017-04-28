@@ -18,6 +18,7 @@ export class RestauranteEditarComponent implements OnInit {
     public status:string;
     public errorMessage:string;
     public loading:string;
+    public id:string;
 
 
     constructor(private _restauranteService:RestauranteService, private _routerParams:RouteParams, private _router:Router){
@@ -25,8 +26,9 @@ export class RestauranteEditarComponent implements OnInit {
     }
 
     ngOnInit():any{
-         this.restaurante = new Restaurante(0, "null", "null", "null", "null", "bajo");
-        if(this._routerParams.get("id")!==null){
+        this.restaurante = new Restaurante(0, "null", "null", "null", "null", "bajo");
+        this.id = this._routerParams.get("id");
+        if(this.id!==null){
             console.log("Carga restaurante");
             this.getRestaurante();
         }
@@ -35,8 +37,7 @@ export class RestauranteEditarComponent implements OnInit {
     }
 
     getRestaurante(){
-        let id = this._routerParams.get("id");
-        this._restauranteService.getRestaurante(id)
+        this._restauranteService.getRestaurante(this.id)
         .subscribe(
             Response =>{
                this.restaurante = Response.data;
@@ -60,8 +61,8 @@ export class RestauranteEditarComponent implements OnInit {
     }
 
     onSubmit(){
-        /*console.log(this.restaurante);
-        this._restauranteService.addRestaurante(this.restaurante)
+        console.log(this.restaurante);
+        this._restauranteService.editRestaurante(this.id, this.restaurante)
         .subscribe(
             response =>{
                 this.status = response.status;
@@ -79,7 +80,7 @@ export class RestauranteEditarComponent implements OnInit {
                     alert("Error en la petición");
                 }
             }
-        );*/
+        );
         
     }
 

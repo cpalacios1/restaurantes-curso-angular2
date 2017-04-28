@@ -37,7 +37,8 @@ System.register(['angular2/core', 'angular2/router', "../../services/restaurante
                 }
                 RestauranteEditarComponent.prototype.ngOnInit = function () {
                     this.restaurante = new restaurante_1.Restaurante(0, "null", "null", "null", "null", "bajo");
-                    if (this._routerParams.get("id") !== null) {
+                    this.id = this._routerParams.get("id");
+                    if (this.id !== null) {
                         console.log("Carga restaurante");
                         this.getRestaurante();
                     }
@@ -45,8 +46,7 @@ System.register(['angular2/core', 'angular2/router', "../../services/restaurante
                 };
                 RestauranteEditarComponent.prototype.getRestaurante = function () {
                     var _this = this;
-                    var id = this._routerParams.get("id");
-                    this._restauranteService.getRestaurante(id)
+                    this._restauranteService.getRestaurante(this.id)
                         .subscribe(function (Response) {
                         _this.restaurante = Response.data;
                         _this.status = Response.status;
@@ -66,26 +66,25 @@ System.register(['angular2/core', 'angular2/router', "../../services/restaurante
                     });
                 };
                 RestauranteEditarComponent.prototype.onSubmit = function () {
-                    /*console.log(this.restaurante);
-                    this._restauranteService.addRestaurante(this.restaurante)
-                    .subscribe(
-                        response =>{
-                            this.status = response.status;
-                            if(this.status!=="success"){
-                                alert("Error en el servidor");
-                            } else {
-                                console.log("Restaurante credo con éxito");
-                                this._router.navigate(["Home"]);
-                            }
-                        }, error => {
-                            this.errorMessage = <any>error;
-            
-                            if(this.errorMessage!==null){
-                                console.log(this.errorMessage);
-                                alert("Error en la petición");
-                            }
+                    var _this = this;
+                    console.log(this.restaurante);
+                    this._restauranteService.editRestaurante(this.id, this.restaurante)
+                        .subscribe(function (response) {
+                        _this.status = response.status;
+                        if (_this.status !== "success") {
+                            alert("Error en el servidor");
                         }
-                    );*/
+                        else {
+                            console.log("Restaurante credo con éxito");
+                            _this._router.navigate(["Home"]);
+                        }
+                    }, function (error) {
+                        _this.errorMessage = error;
+                        if (_this.errorMessage !== null) {
+                            console.log(_this.errorMessage);
+                            alert("Error en la petición");
+                        }
+                    });
                 };
                 RestauranteEditarComponent.prototype.callPrecio = function (value) {
                     this.restaurante.precio = value;
