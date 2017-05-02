@@ -1,5 +1,5 @@
 <h1>{{tituloComponente}}</h1>
-<form id="miFormulario" #miFormulario="ngForm" (ngSubmit)="onSubmit()">
+<form id="formularioRestaurante" #formularioRestaurante="ngForm" (ngSubmit)="onSubmit()">
     <label>Nombre</label>
     <p>
         <input type="text" #nombre="ngForm" ngControl="nombre" [(ngModel)]="restaurante.nombre" required minlength="5"/>
@@ -23,5 +23,9 @@
             <option value="alto">Alto</option>
         </select>
     </p>
-   <input type="submit" value="Guardar" [disabled]="!miFormulario.form.valid" />
+    <label>Imagen</label>
+    <p>
+        <input type="file" #imagen="ngForm" ngControl="imagen" [(ngModel)]="restaurante.imagen" placeholder="Subir imagen..." (change)="fileChangeEvent($event)"/>
+    </p>
+   <input type="submit" value="Guardar" [disabled]="!formularioRestaurante.form.valid" />
 </form>

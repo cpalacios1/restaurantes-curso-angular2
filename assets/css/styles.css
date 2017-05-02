@@ -184,3 +184,7 @@ nav ul li a:hover{
     margin-left: 20%;
 }
 
+#formularioRestaurante textarea{
+    resize: none;
+    height: 75px;
+}
