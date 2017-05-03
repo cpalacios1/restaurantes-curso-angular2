@@ -19,6 +19,7 @@ export class RestauranteAgregarComponent implements OnInit {
     public errorMessage:string;
     public loading:string;
     public filesToUpload: Array<File>;
+    public resultUpload;
 
 
     constructor(private _restauranteService:RestauranteService, private _routerParams:RouteParams, private _router:Router){
@@ -40,7 +41,7 @@ export class RestauranteAgregarComponent implements OnInit {
                 if(this.status!=="success"){
                     alert("Error en el servidor");
                 } else {
-                    console.log("Restaurante credo con éxito");
+                    console.log("Restaurante creado con éxito");
                     this._router.navigate(["Home"]);
                 }
             }, error => {
@@ -64,8 +65,9 @@ export class RestauranteAgregarComponent implements OnInit {
 
         this.makeFileRequest("http://localhost:8888/api-rest/restaurantes-api.php/upload-file", [], this.filesToUpload)
         .then((result) => {
-            this.restaurante.imagen = result.filename;
-            console.log(result.filename);
+            this.resultUpload = result;
+            this.restaurante.imagen = this.resultUpload.filename;
+            console.log(this.resultUpload);
         }, (error) => {
             console.log(error);
         });

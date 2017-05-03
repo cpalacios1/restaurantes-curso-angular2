@@ -76,6 +76,11 @@ header h1{
     float: left;
 }
 
+.restaurantes-item .image img{
+    width: 105px;
+    height: 105px;
+}
+
 .restaurantes-item .data{
     float: left;
     margin-left: 20px;
@@ -187,4 +192,8 @@ nav ul li a:hover{
 #formularioRestaurante textarea{
     resize: none;
     height: 75px;
+}
+
+.mensaje-error {
+    color:orangered;
 }

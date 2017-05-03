@@ -3,17 +3,17 @@
     <label>Nombre</label>
     <p>
         <input type="text" #nombre="ngForm" ngControl="nombre" [(ngModel)]="restaurante.nombre" required minlength="5"/>
-        <span *ngIf="!nombre.valid">No válido</span>
+        <span class="mensaje-error" *ngIf="!nombre.valid">No válido</span>
     </p>
     <label>Dirección</label>
     <p>
         <input type="text" #direccion="ngForm" ngControl="direccion" [(ngModel)]="restaurante.direccion" required/>
-        <span *ngIf="!direccion.valid">No válido</span>
+        <span class="mensaje-error" *ngIf="!direccion.valid">No válido</span>
     </p>
     <label>Descripción</label>
     <p>
         <textarea #descripcion="ngForm" ngControl="descripcion" [(ngModel)]="restaurante.descripcion" required></textarea>
-        <span *ngIf="!descripcion.valid">No válido</span>
+        <span class="mensaje-error" *ngIf="!descripcion.valid">No válido</span>
     </p>
     <label>Precio</label>
     <p>

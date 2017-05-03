@@ -49,7 +49,7 @@ System.register(['angular2/core', 'angular2/router', "../../services/restaurante
                             alert("Error en el servidor");
                         }
                         else {
-                            console.log("Restaurante credo con éxito");
+                            console.log("Restaurante creado con éxito");
                             _this._router.navigate(["Home"]);
                         }
                     }, function (error) {
@@ -68,8 +68,9 @@ System.register(['angular2/core', 'angular2/router', "../../services/restaurante
                     this.filesToUpload = fileInput.target.files;
                     this.makeFileRequest("http://localhost:8888/api-rest/restaurantes-api.php/upload-file", [], this.filesToUpload)
                         .then(function (result) {
-                        _this.restaurante.imagen = result.filename;
-                        console.log(result.filename);
+                        _this.resultUpload = result;
+                        _this.restaurante.imagen = _this.resultUpload.filename;
+                        console.log(_this.resultUpload);
                     }, function (error) {
                         console.log(error);
                     });
