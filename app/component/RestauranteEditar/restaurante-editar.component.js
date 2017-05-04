@@ -36,7 +36,7 @@ System.register(['angular2/core', 'angular2/router', "../../services/restaurante
                     this.tituloComponente = "Editar restaurante";
                 }
                 RestauranteEditarComponent.prototype.ngOnInit = function () {
-                    this.restaurante = new restaurante_1.Restaurante(0, "null", "null", "null", "null", "bajo");
+                    this.restaurante = new restaurante_1.Restaurante(0, "null", "null", "null", "", "bajo");
                     this.id = this._routerParams.get("id");
                     if (this.id !== null) {
                         console.log("Carga restaurante");
@@ -88,6 +88,40 @@ System.register(['angular2/core', 'angular2/router', "../../services/restaurante
                 };
                 RestauranteEditarComponent.prototype.callPrecio = function (value) {
                     this.restaurante.precio = value;
+                };
+                RestauranteEditarComponent.prototype.fileChangeEvent = function (fileInput) {
+                    var _this = this;
+                    this.filesToUpload = fileInput.target.files;
+                    console.log("fileChangeEvent");
+                    this.makeFileRequest("http://localhost:8888/api-rest/restaurantes-api.php/upload-file", [], this.filesToUpload)
+                        .then(function (result) {
+                        _this.resultUpload = result;
+                        _this.restaurante.imagen = _this.resultUpload.filename;
+                        console.log(_this.resultUpload);
+                    }, function (error) {
+                        console.log(error);
+                    });
+                };
+                RestauranteEditarComponent.prototype.makeFileRequest = function (url, params, files) {
+                    return new Promise(function (resolve, reject) {
+                        var formData = new FormData();
+                        var xhr = new XMLHttpRequest();
+                        for (var i = 0; i < files.length; i++) {
+                            formData.append("uploads[]", files[i], files[i].name);
+                        }
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState == 4) {
+                                if (xhr.status == 200) {
+                                    resolve(JSON.parse(xhr.response));
+                                }
+                                else {
+                                    reject(xhr.response);
+                                }
+                            }
+                        };
+                        xhr.open("POST", url, true);
+                        xhr.send(formData);
+                    });
                 };
                 RestauranteEditarComponent = __decorate([
                     core_1.Component({

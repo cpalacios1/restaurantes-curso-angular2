@@ -19,6 +19,8 @@ export class RestauranteEditarComponent implements OnInit {
     public errorMessage:string;
     public loading:string;
     public id:string;
+    public filesToUpload: Array<File>;
+    public resultUpload;
 
 
     constructor(private _restauranteService:RestauranteService, private _routerParams:RouteParams, private _router:Router){
@@ -26,7 +28,7 @@ export class RestauranteEditarComponent implements OnInit {
     }
 
     ngOnInit():any{
-        this.restaurante = new Restaurante(0, "null", "null", "null", "null", "bajo");
+        this.restaurante = new Restaurante(0, "null", "null", "null", "", "bajo");
         this.id = this._routerParams.get("id");
         if(this.id!==null){
             console.log("Carga restaurante");
@@ -86,5 +88,41 @@ export class RestauranteEditarComponent implements OnInit {
 
     callPrecio(value){
         this.restaurante.precio = value;
+    }
+
+    fileChangeEvent(fileInput: any){
+        this.filesToUpload = <Array<File>>fileInput.target.files;
+        console.log("fileChangeEvent");
+        this.makeFileRequest("http://localhost:8888/api-rest/restaurantes-api.php/upload-file", [], this.filesToUpload)
+        .then((result) => {
+            this.resultUpload = result;
+            this.restaurante.imagen = this.resultUpload.filename;
+            console.log(this.resultUpload);
+        }, (error) => {
+            console.log(error);
+        });
+    }
+
+    makeFileRequest(url: string, params: Array<string>, files: Array<File>){
+        return new Promise((resolve, reject) => {
+            var formData: any = new FormData();
+            var xhr = new XMLHttpRequest();
+
+            for(var i = 0; i < files.length; i++){
+                formData.append("uploads[]", files[i], files[i].name);
+            }
+
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState == 4){
+                    if(xhr.status == 200){
+                        resolve(JSON.parse(xhr.response));
+                    } else {
+                        reject(xhr.response);
+                    }
+                }
+            }
+            xhr.open("POST", url, true);
+            xhr.send(formData);
+        });
     }
 }

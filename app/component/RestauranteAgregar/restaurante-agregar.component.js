@@ -36,7 +36,7 @@ System.register(['angular2/core', 'angular2/router', "../../services/restaurante
                     this.tituloComponente = "Crear restaurante";
                 }
                 RestauranteAgregarComponent.prototype.ngOnInit = function () {
-                    this.restaurante = new restaurante_1.Restaurante(0, this._routerParams.get("nombre"), this._routerParams.get("direccion"), this._routerParams.get("descripcion"), "null", "bajo");
+                    this.restaurante = new restaurante_1.Restaurante(0, this._routerParams.get("nombre"), this._routerParams.get("direccion"), this._routerParams.get("descripcion"), "", "bajo");
                     console.log("ComponenteAgregar cargado");
                 };
                 RestauranteAgregarComponent.prototype.onSubmit = function () {
@@ -66,6 +66,7 @@ System.register(['angular2/core', 'angular2/router', "../../services/restaurante
                 RestauranteAgregarComponent.prototype.fileChangeEvent = function (fileInput) {
                     var _this = this;
                     this.filesToUpload = fileInput.target.files;
+                    console.log("fileChangeEvent");
                     this.makeFileRequest("http://localhost:8888/api-rest/restaurantes-api.php/upload-file", [], this.filesToUpload)
                         .then(function (result) {
                         _this.resultUpload = result;

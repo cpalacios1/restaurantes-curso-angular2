@@ -28,7 +28,7 @@ export class RestauranteAgregarComponent implements OnInit {
 
     ngOnInit():any{
         this.restaurante = new Restaurante(0, this._routerParams.get("nombre"), this._routerParams.get("direccion"), 
-        this._routerParams.get("descripcion"), "null", "bajo");
+        this._routerParams.get("descripcion"), "", "bajo");
         console.log("ComponenteAgregar cargado");
     }
 
@@ -62,7 +62,7 @@ export class RestauranteAgregarComponent implements OnInit {
 
     fileChangeEvent(fileInput: any){
         this.filesToUpload = <Array<File>>fileInput.target.files;
-
+console.log("fileChangeEvent");
         this.makeFileRequest("http://localhost:8888/api-rest/restaurantes-api.php/upload-file", [], this.filesToUpload)
         .then((result) => {
             this.resultUpload = result;

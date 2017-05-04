@@ -25,7 +25,7 @@
     </p>
     <label>Imagen</label>
     <p>
-        <input type="file" #imagen="ngForm" ngControl="imagen" [(ngModel)]="restaurante.imagen" placeholder="Subir imagen..." (change)="fileChangeEvent($event)"/>
+        <input type="file" #imagen="ngForm" ngControl="imagen" placeholder="Subir imagen..." (change)="fileChangeEvent($event)" value=""/>
     </p>
    <input type="submit" value="Guardar" [disabled]="!formularioRestaurante.form.valid" />
 </form>
