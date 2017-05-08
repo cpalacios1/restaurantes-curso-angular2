@@ -37,7 +37,8 @@ System.register(['angular2/core', 'angular2/router', "../../services/restaurante
                 RestauranteDetalleComponent.prototype.getRestaurante = function () {
                     var _this = this;
                     var id = this._routerParams.get("id");
-                    this._restauranteService.getRestaurante(id)
+                    var random = this._routerParams.get("random");
+                    this._restauranteService.getRestaurante(id, random)
                         .subscribe(function (Response) {
                         _this.restaurante = Response.data;
                         _this.status = Response.status;

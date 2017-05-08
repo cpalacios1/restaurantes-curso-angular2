@@ -29,7 +29,8 @@ export class RestauranteDetalleComponent {
 
     getRestaurante(){
         let id = this._routerParams.get("id");
-        this._restauranteService.getRestaurante(id)
+        let random = this._routerParams.get("random");
+        this._restauranteService.getRestaurante(id, random)
         .subscribe(
             Response =>{
                this.restaurante = Response.data;

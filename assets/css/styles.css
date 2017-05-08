@@ -197,3 +197,12 @@ nav ul li a:hover{
 .mensaje-error {
     color:orangered;
 }
+
+.imagen-restaurante-detalle {
+    width: 200px;
+    float: left;
+}
+
+.restaurante-detalle-data {
+    float: left;
+}
