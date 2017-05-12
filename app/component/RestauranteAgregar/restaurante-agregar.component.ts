@@ -1,6 +1,6 @@
 // Importar el núcleo de Angular
-import {Component, OnInit} from 'angular2/core';
-import {Router, RouteParams} from 'angular2/router';
+import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 import {RestauranteService} from "../../services/restaurante.service";
 import {Restaurante} from "../../model/restaurante";
  
@@ -22,14 +22,15 @@ export class RestauranteAgregarComponent implements OnInit {
     public resultUpload;
 
 
-    constructor(private _restauranteService:RestauranteService, private _routerParams:RouteParams, private _router:Router){
+    constructor(private _route:ActivatedRoute, private _router: Router, private _restauranteService:RestauranteService){
 
     }
 
     ngOnInit():any{
-        this.restaurante = new Restaurante(0, this._routerParams.get("nombre"), this._routerParams.get("direccion"), 
-        this._routerParams.get("descripcion"), "", "bajo");
-        console.log("ComponenteAgregar cargado");
+        this._route.params.forEach((params: Params) => {
+            this.restaurante = new Restaurante(0, "null", "null", "null", "", "bajo");
+            console.log("ComponenteAgregar cargado");
+        });
     }
 
     onSubmit(){
@@ -42,7 +43,7 @@ export class RestauranteAgregarComponent implements OnInit {
                     alert("Error en el servidor");
                 } else {
                     console.log("Restaurante creado con éxito");
-                    this._router.navigate(["Home"]);
+                    this._router.navigate(["/"]);
                 }
             }, error => {
                 this.errorMessage = <any>error;

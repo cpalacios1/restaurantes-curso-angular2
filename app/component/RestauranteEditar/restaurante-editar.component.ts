@@ -1,6 +1,6 @@
 // Importar el núcleo de Angular
-import {Component, OnInit} from 'angular2/core';
-import {Router, RouteParams} from 'angular2/router';
+import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 import {RestauranteService} from "../../services/restaurante.service";
 import {Restaurante} from "../../model/restaurante";
  
@@ -23,19 +23,22 @@ export class RestauranteEditarComponent implements OnInit {
     public resultUpload;
 
 
-    constructor(private _restauranteService:RestauranteService, private _routerParams:RouteParams, private _router:Router){
+    constructor(private _route:ActivatedRoute, private _router: Router, private _restauranteService:RestauranteService){
 
     }
 
     ngOnInit():any{
-        this.restaurante = new Restaurante(0, "null", "null", "null", "", "bajo");
-        this.id = this._routerParams.get("id");
-        if(this.id!==null){
-            console.log("Carga restaurante");
-            this.getRestaurante();
-        }
+        this._route.params.forEach((params: Params) => {
+            this.restaurante = new Restaurante(0, "null", "null", "null", "", "bajo");
+            this.id = params["id"];
+            if(this.id!==null){
+                console.log("Carga restaurante");
+                this.getRestaurante();
+            }
+            
+            console.log("ComponenteAgregar cargado");
+        });
         
-        console.log("ComponenteAgregar cargado");
     }
 
     getRestaurante(){
@@ -46,7 +49,7 @@ export class RestauranteEditarComponent implements OnInit {
                this.status = Response.status;
                if(this.status!=="success"){
                     //alert("Error en el servidor");
-                    this._router.navigate(['Home']);
+                    this._router.navigate(['/']);
                }
                this.loading = 'hide';
                console.log(this.restaurante);
@@ -64,25 +67,29 @@ export class RestauranteEditarComponent implements OnInit {
 
     onSubmit(){
         console.log(this.restaurante);
-        this._restauranteService.editRestaurante(this.id, this.restaurante)
-        .subscribe(
-            response =>{
-                this.status = response.status;
-                if(this.status!=="success"){
-                    alert("Error en el servidor");
-                } else {
-                    console.log("Restaurante credo con éxito");
-                    this._router.navigate(["Home"]);
-                }
-            }, error => {
-                this.errorMessage = <any>error;
+         this._route.params.forEach((params: Params) => {
+            this._restauranteService.editRestaurante(this.id, this.restaurante)
+            .subscribe(
+                response =>{
+                    this.status = response.status;
+                    if(this.status!=="success"){
+                        alert("Error en el servidor");
+                    } else {
+                        console.log("Restaurante credo con éxito");
+                        this._router.navigate(["/"]);
+                    }
+                }, error => {
+                    this.errorMessage = <any>error;
 
-                if(this.errorMessage!==null){
-                    console.log(this.errorMessage);
-                    alert("Error en la petición");
+                    if(this.errorMessage!==null){
+                        console.log(this.errorMessage);
+                        alert("Error en la petición");
+                    }
                 }
-            }
-        );
+            );
+         });
+
+        
         
     }
 

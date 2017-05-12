@@ -4,7 +4,7 @@
     <li class="loading" *ngIf="loading == 'show'">
         <img src="../../assets/images/loading.gif"/>
     </li>
-    <li *ngFor="#restaurante of restaurantes" class="restaurantes-item">
+    <li *ngFor="let restaurante of restaurantes" class="restaurantes-item">
         <div class="image">
             <img src="http://localhost:8888/api-rest/uploads/{{restaurante.imagen}}" *ngIf="restaurante.imagen && restaurante.imagen!=='null'"/>
         </div>
@@ -12,8 +12,8 @@
             <h4>{{restaurante.nombre}}</h4>
             <p>{{restaurante.direccion}}</p>
             <p>
-                <a [routerLink]="['Restaurante', {id:restaurante.id}]" class="btn btn-ver">Ver</a>
-                <a [routerLink]="['EditarRestaurante', {id:restaurante.id}]" class="btn btn-verde">Editar</a>
+                <a [routerLink]="['/restaurante', restaurante.id]" class="btn btn-ver">Ver</a>
+                <a [routerLink]="['/editar-restaurante', restaurante.id]" class="btn btn-verde">Editar</a>
                 <a (click)="onMostrarModalEliminar(restaurante.id)" class="btn btn-rojo">Eliminar</a>
             </p>
         </div>

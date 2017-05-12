@@ -1,6 +1,6 @@
 // Importar el núcleo de Angular
-import {Component} from 'angular2/core';
-import {ROUTER_DIRECTIVES, RouteConfig, Router} from 'angular2/router';
+import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 import {RestauranteService} from "../../services/restaurante.service";
 import {Restaurante} from "../../model/restaurante";
  
@@ -8,8 +8,7 @@ import {Restaurante} from "../../model/restaurante";
 @Component({
     selector: 'restaurantes-list',
     templateUrl: "app/view/restaurantes-list.html",
-    providers: [RestauranteService],
-    directives: [ROUTER_DIRECTIVES]
+    providers: [RestauranteService]
 })
  
 // Clase del componente donde iran los datos y funcionalidades
@@ -22,8 +21,8 @@ export class RestaurantesListComponent {
     public mostrarModalEliminar:Boolean;
     public idRestauranteEliminar:string;
 
-    constructor(private _restauranteService: RestauranteService){
-
+    constructor(private _route:ActivatedRoute, private _router: Router, private _restauranteService: RestauranteService){
+        
     }
 
     ngOnInit(){
@@ -41,17 +40,18 @@ export class RestaurantesListComponent {
                 this.restaurantes = result.data;
                 this.status = result.status;
                 if(this.status!=="success"){
-                        alert("Error en el servidor");
+                    alert("Error en el servidor");
                 }
                 this.loading = 'hide';
+                console.log('Lista cargada');
                 /*box_restaurantes.style.display = "none";*/
             }, error => {
-                    this.errorMessage = <any>error;
-
-                    if(this.errorMessage!==null){
-                        console.log(this.errorMessage);
-                        alert("Error en la petición");
-                    }
+                this.errorMessage = <any>error;
+alert("Error en la petición");
+                if(this.errorMessage!==null){
+                    console.log(this.errorMessage);
+                    alert("Error en la petición");
+                }
             }
         );
     }
