@@ -8,11 +8,11 @@ import {RestauranteEditarComponent} from './component/RestauranteEditar/restaura
  
 const appRoutes: Routes = [
     {path: '', redirectTo: '/', pathMatch: 'full'},
-    {path: '/', component: RestaurantesListComponent},
-    {path: '/restaurante/:id', component: RestauranteDetalleComponent},
-    {path: '/crear-restaurante', component: RestauranteAgregarComponent},
-    {path: '/editar-restaurante/:id', component: RestauranteEditarComponent},
-    {path: '/donde-como-hoy/:random', component: RestauranteDetalleComponent}
+    {path: '', component: RestaurantesListComponent},
+    {path: 'restaurante/:id', component: RestauranteDetalleComponent},
+    {path: 'crear-restaurante', component: RestauranteAgregarComponent},
+    {path: 'editar-restaurante/:id', component: RestauranteEditarComponent},
+    {path: 'donde-como-hoy/:random', component: RestauranteDetalleComponent}
 ];
 
 export const appRoutingProviders : any[] = [];

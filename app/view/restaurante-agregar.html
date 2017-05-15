@@ -2,22 +2,22 @@
 <form id="formularioRestaurante" #formularioRestaurante="ngForm" (ngSubmit)="onSubmit()">
     <label>Nombre</label>
     <p>
-        <input type="text" #nombre="ngForm" name="nombre" [(ngModel)]="restaurante.nombre" required minlength="5"/>
+        <input type="text" #nombre="ngModel" name="nombre" [(ngModel)]="restaurante.nombre" required minlength="5"/>
         <span class="mensaje-error" *ngIf="!nombre.valid">No válido</span>
     </p>
     <label>Dirección</label>
     <p>
-        <input type="text" #direccion="ngForm" name="direccion" [(ngModel)]="restaurante.direccion" required/>
+        <input type="text" #direccion="ngModel" name="direccion" [(ngModel)]="restaurante.direccion" required/>
         <span class="mensaje-error" *ngIf="!direccion.valid">No válido</span>
     </p>
     <label>Descripción</label>
     <p>
-        <textarea #descripcion="ngForm" name="descripcion" [(ngModel)]="restaurante.descripcion" required></textarea>
+        <textarea #descripcion="ngModel" name="descripcion" [(ngModel)]="restaurante.descripcion" required></textarea>
         <span class="mensaje-error" *ngIf="!descripcion.valid">No válido</span>
     </p>
     <label>Precio</label>
     <p>
-        <select (change)="callPrecio(precio.value)" #precio="ngForm"  [(ngModel)]="restaurante.precio" >
+        <select (change)="callPrecio(precio.value)" #precio="ngModel"  [(ngModel)]="restaurante.precio" name="precio">
             <option value="bajo">Bajo</option>
             <option value="normal">Normal</option>
             <option value="alto">Alto</option>
@@ -25,7 +25,7 @@
     </p>
     <label>Imagen</label>
     <p>
-        <input type="file" #imagen="ngForm" name="imagen" placeholder="Subir imagen..." (change)="fileChangeEvent($event)" value=""/>
+        <input type="file"  name="imagen" placeholder="Subir imagen..." (change)="fileChangeEvent($event)" value=""/>
     </p>
    <input type="submit" value="Guardar" [disabled]="!formularioRestaurante.form.valid" />
 </form>
