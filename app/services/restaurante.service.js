@@ -45,6 +45,59 @@ var RestauranteService = (function () {
     RestauranteService.prototype.deleteRestaurante = function (id) {
         return this._http.get("http://localhost:8888/api-rest/restaurantes-api.php/delete-restaurante/" + id).map(function (res) { return res.json(); });
     };
+    RestauranteService.prototype.getPDF = function (carpeta, indicios, encargado) {
+        // SETUP
+        // Grab required packages
+        var webshot = Meteor.npmRequire('webshot');
+        var fs = Npm.require('fs');
+        var Future = Npm.require('fibers/future');
+        var fut = new Future();
+        var fileName = "carpeta-report.pdf";
+        // GENERATE HTML STRING
+        var css = Assets.getText('style.css');
+        SSR.compileTemplate('layout', Assets.getText('layout.html'));
+        Template.layout.helpers({
+            getDocType: function () {
+                return "<!DOCTYPE html>";
+            }
+        });
+        SSR.compileTemplate('carpeta_report', Assets.getText('carpeta-report.html'));
+        // PREPARE DATA
+        //var carpeta = CarpetaInvestigacion.find({});
+        var data = {
+            carpeta: carpeta,
+            indicios: indicios,
+            encargado: encargado
+        };
+        var html_string = SSR.render('layout', {
+            css: css,
+            template: "carpeta_report",
+            data: data
+        });
+        // Setup Webshot options
+        var options = {
+            "paperSize": {
+                "format": "Letter",
+                "orientation": "portrait",
+                "margin": "1cm"
+            },
+            siteType: 'html'
+        };
+        // Commence Webshot
+        console.log("Commencing webshot...");
+        webshot(html_string, fileName, options, function (err) {
+            fs.readFile(fileName, function (err, data) {
+                if (err) {
+                    return console.log(err);
+                }
+                fs.unlinkSync(fileName);
+                fut.return(data);
+            });
+        });
+        var pdfData = fut.wait();
+        var base64String = new Buffer(pdfData).toString('base64');
+        return base64String;
+    };
     return RestauranteService;
 }());
 RestauranteService = __decorate([
